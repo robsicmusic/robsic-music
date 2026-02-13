@@ -3,525 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Robsic — Sample Packs & Mastering</title>
+<title>Robsic — Sample Packs</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/wavesurfer.js"></script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Inter,sans-serif;
+  background:radial-gradient(circle at 50% -20%,#2a0040,#000 60%);
+  color:#fff;
 }
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at 50% -20%, #2a0040, #000 60%);
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-section {
-  padding: 100px 8%;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-h1, h2 {
-  font-weight: 800;
-  letter-spacing: -1px;
-}
-
-p {
-  color: #9ca3af;
-  line-height: 1.6;
-}
-
-.button {
-  display: inline-block;
-  padding: 14px 32px;
-  border-radius: 40px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.primary {
-  background: linear-gradient(90deg, #a855f7, #6366f1);
-  color: white;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-}
-
-.primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 35px rgba(168, 85, 247, 0.7);
-}
-
-.outline {
-  border: 1px solid #444;
-  color: #fff;
-  background: rgba(0,0,0,0.3);
-}
-
-.outline:hover {
-  background: rgba(168, 85, 247, 0.1);
-  border-color: #a855f7;
-}
+section{padding:90px 8%}
+h1,h2{font-weight:800}
+p{color:#aaa}
 
 /* HERO */
-.hero {
-  padding-top: 140px;
-  padding-bottom: 80px;
-  text-align: center;
-  position: relative;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent 70%);
-  pointer-events: none;
-  animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-  50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
-}
-
-.hero small {
-  letter-spacing: 4px;
-  font-size: 13px;
-  color: #a855f7;
-  position: relative;
-  z-index: 1;
-}
-
-.hero h1 {
-  font-size: 52px;
-  margin: 20px 0;
-  position: relative;
-  z-index: 1;
-}
-
-.hero p {
-  max-width: 600px;
-  margin: auto;
-  margin-bottom: 40px;
-  font-size: 18px;
-  position: relative;
-  z-index: 1;
-}
-
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  position: relative;
-  z-index: 1;
-  flex-wrap: wrap;
+.hero{text-align:center;padding-top:120px}
+.hero small{letter-spacing:4px;color:#a855f7}
+.hero h1{font-size:48px;margin:20px 0}
+.hero-buttons{margin-top:30px}
+.button{
+  padding:14px 28px;
+  border-radius:40px;
+  text-decoration:none;
+  background:linear-gradient(90deg,#a855f7,#6366f1);
+  color:white;
+  margin:10px;
+  display:inline-block;
 }
 
 /* PRODUCTS */
-.products h2 {
-  text-align: center;
-  font-size: 36px;
-  margin-bottom: 60px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:40px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 40px;
+.card{
+  background:#0d0d0d;
+  border-radius:22px;
+  padding:25px;
+  border:1px solid #1f1f1f;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 50px rgba(168,85,247,.25);
+  border-color:#a855f7;
 }
 
-.card {
-  background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
-  border-radius: 24px;
-  padding: 30px;
-  border: 1px solid #1f1f1f;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+.card-image{
+  height:200px;
+  border-radius:16px;
+  margin-bottom:18px;
+  background-size:cover;
+  background-position:center;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
+.price{color:#a855f7;margin:10px 0}
 
-.card:hover::before {
-  opacity: 1;
+/* SNIPPETS */
+.snippet{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
 }
-
-.card:hover {
-  transform: translateY(-10px);
-  border-color: #a855f7;
-  box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
+.snippet button{
+  width:28px;height:28px;border-radius:50%;
+  border:none;background:#a855f7;color:white;
+  cursor:pointer;
 }
-
-/* ===== REPLACE THIS: Add your own product image ===== */
-.card-image {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-  border-radius: 16px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #555;
-  font-size: 14px;
-  border: 1px solid #222;
-}
-/* To add your own image, replace the background with:
-   background: url('YOUR_IMAGE_PATH.jpg') center/cover;
-   Example: background: url('images/pack1.jpg') center/cover;
-*/
-
-.card h3 {
-  margin-bottom: 8px;
-  font-size: 20px;
-  position: relative;
-  z-index: 1;
-}
-
-.card-description {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 15px;
-  position: relative;
-  z-index: 1;
-}
-
-.price {
-  color: #a855f7;
-  font-weight: 600;
-  margin-bottom: 20px;
-  font-size: 24px;
-  position: relative;
-  z-index: 1;
-}
-
-.audio-btn {
-  width: 100%;
-  margin-bottom: 15px;
-  background: #0f0f0f;
-  border: 1px solid #2a2a2a;
-  color: #fff;
-  padding: 12px;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-size: 14px;
-  font-weight: 500;
-  position: relative;
-  z-index: 1;
-}
-
-.audio-btn:hover {
-  border-color: #a855f7;
-  background: #141414;
-}
-
-.audio-btn.playing {
-  border-color: #a855f7;
-  background: #141414;
-}
-
-.card .button {
-  width: 100%;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
+.wave{flex:1;height:40px}
 
 /* SPOTIFY */
-.spotify {
-  text-align: center;
-}
-
-.spotify h2 {
-  font-size: 36px;
-  margin-bottom: 15px;
-}
-
-.spotify > p {
-  margin-bottom: 40px;
-}
-
-.spotify iframe {
-  margin-top: 20px;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  max-width: 100%;
+.spotify{text-align:center}
+.spotify iframe{
+  margin-top:30px;
+  border-radius:16px;
 }
 
 /* FOOTER */
-footer {
-  text-align: center;
-  padding: 80px 8% 40px;
-  border-top: 1px solid #1a1a1a;
-  margin-top: 80px;
-}
-
-footer p {
-  margin-bottom: 20px;
-  color: #666;
-}
-
-.socials {
-  margin-top: 30px;
-}
-
-.socials a {
-  margin: 0 15px;
-  color: #888;
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.3s ease;
-  display: inline-block;
-}
-
-.socials a:hover {
-  color: #a855f7;
-  transform: translateY(-2px);
-}
-
-/* Responsive */
-@media(max-width: 768px) {
-  .hero h1 {
-    font-size: 36px;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .hero-buttons .button {
-    width: 80%;
-    max-width: 300px;
-  }
-  
-  section {
-    padding: 80px 6%;
-  }
-  
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .spotify iframe {
-    height: 380px;
-  }
-}
-
-@media(max-width: 480px) {
-  .hero h1 {
-    font-size: 28px;
-  }
-  
-  .hero p {
-    font-size: 16px;
-  }
-  
-  .products h2, .spotify h2 {
-    font-size: 28px;
-  }
-}
-
-/* Smooth scroll fade-in animation */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60px}
 </style>
 </head>
 
 <body>
 
 <!-- HERO -->
-<section class="hero fade-in">
+<section class="hero">
   <small>ROBSIC</small>
-  <h1>Premium Sample Packs & Mastering</h1>
-  <p>Royalty-free sounds designed for modern electronic producers. Built for impact, clarity and power. Plus professional mastering services to take your tracks to the next level.</p>
-
+  <h1>Premium Sample Packs</h1>
+  <p>Royalty-free sounds designed for modern electronic producers.</p>
   <div class="hero-buttons">
-    <a href="#products" class="button primary">Browse Packs</a>
-    <a href="mastering.html" class="button outline">Mastering Services</a>
+    <a href="#products" class="button">Browse Packs</a>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section class="products fade-in" id="products">
-  <h2>My Sample Packs</h2>
+<section id="products">
+<h2 style="text-align:center;margin-bottom:50px">My Packs</h2>
 
-  <div class="grid">
+<div class="grid">
 
-    <!-- PACK 1 -->
-    <div class="card">
-      <!-- ===== REPLACE: Add your product image ===== -->
-      <div class="card-image" style="background: url('images/sample pack.png') center/cover;"></div>
+<!-- PACK 1 -->
+<div class="card">
+<div class="card-image" style="background:url('images/pack1.jpg')"></div>
+<h3>Robsic Sample Pack Vol.1</h3>
+<p class="price">$19.99</p>
 
-      
-      <h3>Robsic Sample Pack Vol. 1</h3>
-      <p class="card-description">150+ high-quality sounds, loops, and one-shots for electronic production</p>
-      <div class="price">$19.99</div>
-      
-      <!-- ===== REPLACE: Change src to your audio file path ===== 
-           Example: <audio id="audio1" src="audio/demo1.mp3"></audio> -->
-      <audio id="audio1" src="demo1.mp3"></audio>
-      <button class="audio-btn" onclick="toggleAudio('audio1', this)">▶ Preview Demo</button>
-      
-      <!-- ===== REPLACE: Add your purchase/download link ===== -->
-      <a href="#" class="button primary">Get This Pack</a>
-    </div>
+<div class="snippet"><button onclick="play('p1a')">▶</button><div id="p1a" class="wave"></div></div>
+<div class="snippet"><button onclick="play('p1b')">▶</button><div id="p1b" class="wave"></div></div>
+<div class="snippet"><button onclick="play('p1c')">▶</button><div id="p1c" class="wave"></div></div>
 
-    <!-- PACK 2 -->
-    <div class="card">
-      <!-- ===== REPLACE: Add your product image ===== -->
-      <div class="card-image">Your Image Here</div>
-      
-      <h3>Ethereal Synths</h3>
-      <p class="card-description">Atmospheric synth presets and MIDI files for dreamy soundscapes</p>
-      <div class="price">$39.99</div>
-      
-      <!-- ===== REPLACE: Change src to your audio file path ===== -->
-      <audio id="audio2" src="demo2.mp3"></audio>
-      <button class="audio-btn" onclick="toggleAudio('audio2', this)">▶ Preview Demo</button>
-      
-      <!-- ===== REPLACE: Add your purchase/download link ===== -->
-      <a href="#" class="button primary">Get This Pack</a>
-    </div>
+<a href="#" class="button">Get Pack</a>
+</div>
 
-    <!-- PACK 3 -->
-    <div class="card">
-      <!-- ===== REPLACE: Add your product image ===== -->
-      <div class="card-image">Your Image Here</div>
-      
-      <h3>Vocal Chops Essentials</h3>
-      <p class="card-description">Creative vocal chops and processed vocals ready to use</p>
-      <div class="price">$24.99</div>
-      
-      <!-- ===== REPLACE: Change src to your audio file path ===== -->
-      <audio id="audio3" src="demo3.mp3"></audio>
-      <button class="audio-btn" onclick="toggleAudio('audio3', this)">▶ Preview Demo</button>
-      
-      <!-- ===== REPLACE: Add your purchase/download link ===== -->
-      <a href="#" class="button primary">Get This Pack</a>
-    </div>
+<!-- PACK 2 -->
+<div class="card">
+<div class="card-image" style="background:url('images/pack2.jpg')"></div>
+<h3>Ethereal Synths</h3>
+<p class="price">$39.99</p>
 
-  </div>
+<div class="snippet"><button onclick="play('p2a')">▶</button><div id="p2a" class="wave"></div></div>
+<div class="snippet"><button onclick="play('p2b')">▶</button><div id="p2b" class="wave"></div></div>
+<div class="snippet"><button onclick="play('p2c')">▶</button><div id="p2c" class="wave"></div></div>
+
+<a href="#" class="button">Get Pack</a>
+</div>
+
+<!-- PACK 3 -->
+<div class="card">
+<div class="card-image" style="background:url('images/pack3.jpg')"></div>
+<h3>Vocal Chops Essentials</h3>
+<p class="price">$24.99</p>
+
+<div class="snippet"><button onclick="play('p3a')">▶</button><div id="p3a" class="wave"></div></div>
+<div class="snippet"><button onclick="play('p3b')">▶</button><div id="p3b" class="wave"></div></div>
+<div class="snippet"><button onclick="play('p3c')">▶</button><div id="p3c" class="wave"></div></div>
+
+<a href="#" class="button">Get Pack</a>
+</div>
+
+</div>
 </section>
 
 <!-- SPOTIFY -->
-<section class="spotify fade-in" id="spotify">
-  <h2>Listen on Spotify</h2>
-  <p>Check out my latest releases and playlists</p>
-
-  <!-- ===== REPLACE: Update with your Spotify artist/playlist embed ===== 
-       Go to Spotify > Share > Embed to get your own embed code -->
-  <iframe 
-    style="border-radius:12px"
-    src="https://open.spotify.com/embed/artist/6yFdyGIQXHztc5CA5m2XJo?utm_source=generator&theme=0"
-    width="100%" 
-    height="352"
-    frameBorder="0"
-    allowfullscreen=""
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy">
-  </iframe>
+<section class="spotify">
+<h2>Listen on Spotify</h2>
+<iframe src="https://open.spotify.com/embed/artist/6yFdyGIQXHztc5CA5m2XJo?theme=0"
+width="100%" height="352" frameBorder="0"></iframe>
 </section>
 
-<footer class="fade-in">
-  <p>© 2026 Robsic. All rights reserved.</p>
-  <div class="socials">
-    <!-- ===== REPLACE: Add your social media links ===== -->
-    <a href="#" target="_blank">Instagram</a>
-    <a href="#" target="_blank">YouTube</a>
-    <a href="#" target="_blank">TikTok</a>
-  </div>
+<footer>
+<p>© 2026 Robsic</p>
 </footer>
 
 <script>
-// Smooth scroll fade-in animation
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
+const players={};
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, observerOptions);
-
-document.querySelectorAll('.fade-in').forEach(el => {
-  observer.observe(el);
+function createWave(id,file){
+players[id]=WaveSurfer.create({
+container:"#"+id,
+waveColor:"#555",
+progressColor:"#a855f7",
+height:40
 });
+players[id].load(file);
+}
 
-// Audio player with improved UX
-function toggleAudio(audioId, button) {
-  const audio = document.getElementById(audioId);
-  const allAudios = document.querySelectorAll("audio");
-  const allButtons = document.querySelectorAll(".audio-btn");
+/* ===== CHANGE THESE FILE NAMES LATER ===== */
+createWave("p1a","audio/p1-kick.mp3");
+createWave("p1b","audio/p1-bass.mp3");
+createWave("p1c","audio/p1-fx.mp3");
 
-  // Pause all other audios and reset buttons
-  allAudios.forEach(a => {
-    if (a.id !== audioId) {
-      a.pause();
-      a.currentTime = 0;
-    }
-  });
-  
-  allButtons.forEach(btn => {
-    if (btn !== button) {
-      btn.classList.remove('playing');
-      btn.innerHTML = '▶ Preview Demo';
-    }
-  });
+createWave("p2a","audio/p2-kick.mp3");
+createWave("p2b","audio/p2-bass.mp3");
+createWave("p2c","audio/p2-fx.mp3");
 
-  // Toggle current audio
-  if (audio.paused) {
-    audio.play();
-    button.classList.add('playing');
-    button.innerHTML = '⏸ Pause';
-  } else {
-    audio.pause();
-    button.classList.remove('playing');
-    button.innerHTML = '▶ Preview Demo';
-  }
+createWave("p3a","audio/p3-kick.mp3");
+createWave("p3b","audio/p3-bass.mp3");
+createWave("p3c","audio/p3-fx.mp3");
 
-  // Reset button when audio ends
-  audio.onended = function() {
-    button.classList.remove('playing');
-    button.innerHTML = '▶ Preview Demo';
-  };
+function play(id){
+Object.values(players).forEach(p=>p.pause());
+players[id].playPause();
 }
 </script>
 
