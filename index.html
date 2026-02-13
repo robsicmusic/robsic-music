@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Robsic — Sample Packs</title>
+<title>Robsic — Sample Packs & Mastering</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
@@ -12,6 +12,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
   scroll-behavior: smooth;
 }
 
@@ -20,10 +23,12 @@ body {
   background: radial-gradient(circle at 50% -20%, #2a0040, #000 60%);
   color: #fff;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 section {
   padding: 100px 8%;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 h1, h2 {
@@ -33,6 +38,7 @@ h1, h2 {
 
 p {
   color: #9ca3af;
+  line-height: 1.6;
 }
 
 .button {
@@ -42,6 +48,7 @@ p {
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .primary {
@@ -56,12 +63,14 @@ p {
 }
 
 .outline {
-  border: 1px solid #333;
+  border: 1px solid #444;
   color: #fff;
+  background: rgba(0,0,0,0.3);
 }
 
 .outline:hover {
-  background: #111;
+  background: rgba(168, 85, 247, 0.1);
+  border-color: #a855f7;
 }
 
 /* HERO */
@@ -69,17 +78,40 @@ p {
   padding-top: 140px;
   padding-bottom: 80px;
   text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent 70%);
+  pointer-events: none;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
 }
 
 .hero small {
   letter-spacing: 4px;
   font-size: 13px;
   color: #a855f7;
+  position: relative;
+  z-index: 1;
 }
 
 .hero h1 {
   font-size: 52px;
   margin: 20px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .hero p {
@@ -87,12 +119,17 @@ p {
   margin: auto;
   margin-bottom: 40px;
   font-size: 18px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-buttons {
   display: flex;
   justify-content: center;
   gap: 20px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
 }
 
 /* PRODUCTS */
@@ -104,7 +141,7 @@ p {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 40px;
 }
 
@@ -113,24 +150,74 @@ p {
   border-radius: 24px;
   padding: 30px;
   border: 1px solid #1f1f1f;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .card:hover {
   transform: translateY(-10px);
   border-color: #a855f7;
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
+  box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
 }
+
+/* ===== REPLACE THIS: Add your own product image ===== */
+.card-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 14px;
+  border: 1px solid #222;
+}
+/* To add your own image, replace the background with:
+   background: url('YOUR_IMAGE_PATH.jpg') center/cover;
+   Example: background: url('images/pack1.jpg') center/cover;
+*/
 
 .card h3 {
   margin-bottom: 8px;
   font-size: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-description {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
 }
 
 .price {
   color: #a855f7;
   font-weight: 600;
   margin-bottom: 20px;
+  font-size: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .audio-btn {
@@ -143,11 +230,27 @@ p {
   border-radius: 14px;
   cursor: pointer;
   transition: 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
 }
 
 .audio-btn:hover {
   border-color: #a855f7;
   background: #141414;
+}
+
+.audio-btn.playing {
+  border-color: #a855f7;
+  background: #141414;
+}
+
+.card .button {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 /* SPOTIFY */
@@ -157,32 +260,49 @@ p {
 
 .spotify h2 {
   font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.spotify > p {
+  margin-bottom: 40px;
 }
 
 .spotify iframe {
-  margin-top: 40px;
+  margin-top: 20px;
   border-radius: 20px;
-  box-shadow: 0 0 50px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  max-width: 100%;
 }
 
 /* FOOTER */
 footer {
   text-align: center;
-  padding: 80px 0 40px;
-  border-top: 1px solid #111;
+  padding: 80px 8% 40px;
+  border-top: 1px solid #1a1a1a;
   margin-top: 80px;
 }
 
+footer p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.socials {
+  margin-top: 30px;
+}
+
 .socials a {
-  margin: 0 12px;
+  margin: 0 15px;
   color: #888;
   text-decoration: none;
   font-weight: 500;
   transition: 0.3s ease;
+  display: inline-block;
 }
 
 .socials a:hover {
   color: #a855f7;
+  transform: translateY(-2px);
 }
 
 /* Responsive */
@@ -190,9 +310,53 @@ footer {
   .hero h1 {
     font-size: 36px;
   }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-buttons .button {
+    width: 80%;
+    max-width: 300px;
+  }
+  
   section {
     padding: 80px 6%;
   }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .spotify iframe {
+    height: 380px;
+  }
+}
+
+@media(max-width: 480px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+  
+  .hero p {
+    font-size: 16px;
+  }
+  
+  .products h2, .spotify h2 {
+    font-size: 28px;
+  }
+}
+
+/* Smooth scroll fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
 </head>
@@ -200,44 +364,72 @@ footer {
 <body>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero fade-in">
   <small>ROBSIC</small>
-  <h1>Premium Sample Packs & Sounds</h1>
-  <p>Royalty-free sounds designed for modern electronic producers. Built for impact, clarity and power.</p>
+  <h1>Premium Sample Packs & Mastering</h1>
+  <p>Royalty-free sounds designed for modern electronic producers. Built for impact, clarity and power. Plus professional mastering services to take your tracks to the next level.</p>
 
   <div class="hero-buttons">
     <a href="#products" class="button primary">Browse Packs</a>
-    <a href="#spotify" class="button outline">Listen on Spotify</a>
+    <a href="mastering.html" class="button outline">Mastering Services</a>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section class="products" id="products">
-  <h2>My Packs</h2>
+<section class="products fade-in" id="products">
+  <h2>My Sample Packs</h2>
 
   <div class="grid">
 
+    <!-- PACK 1 -->
     <div class="card">
+      <!-- ===== REPLACE: Add your product image ===== -->
+      <div class="card-image">Your Image Here</div>
+      
       <h3>Robsic Sample Pack Vol. 1</h3>
+      <p class="card-description">150+ high-quality sounds, loops, and one-shots for electronic production</p>
       <div class="price">$19.99</div>
-      <button class="audio-btn" onclick="playAudio('audio1')">▶ Preview Demo</button>
+      
+      <!-- ===== REPLACE: Change src to your audio file path ===== 
+           Example: <audio id="audio1" src="audio/demo1.mp3"></audio> -->
       <audio id="audio1" src="demo1.mp3"></audio>
+      <button class="audio-btn" onclick="toggleAudio('audio1', this)">▶ Preview Demo</button>
+      
+      <!-- ===== REPLACE: Add your purchase/download link ===== -->
       <a href="#" class="button primary">Get This Pack</a>
     </div>
 
+    <!-- PACK 2 -->
     <div class="card">
+      <!-- ===== REPLACE: Add your product image ===== -->
+      <div class="card-image">Your Image Here</div>
+      
       <h3>Ethereal Synths</h3>
+      <p class="card-description">Atmospheric synth presets and MIDI files for dreamy soundscapes</p>
       <div class="price">$39.99</div>
-      <button class="audio-btn" onclick="playAudio('audio2')">▶ Preview Demo</button>
+      
+      <!-- ===== REPLACE: Change src to your audio file path ===== -->
       <audio id="audio2" src="demo2.mp3"></audio>
+      <button class="audio-btn" onclick="toggleAudio('audio2', this)">▶ Preview Demo</button>
+      
+      <!-- ===== REPLACE: Add your purchase/download link ===== -->
       <a href="#" class="button primary">Get This Pack</a>
     </div>
 
+    <!-- PACK 3 -->
     <div class="card">
+      <!-- ===== REPLACE: Add your product image ===== -->
+      <div class="card-image">Your Image Here</div>
+      
       <h3>Vocal Chops Essentials</h3>
+      <p class="card-description">Creative vocal chops and processed vocals ready to use</p>
       <div class="price">$24.99</div>
-      <button class="audio-btn" onclick="playAudio('audio3')">▶ Preview Demo</button>
+      
+      <!-- ===== REPLACE: Change src to your audio file path ===== -->
       <audio id="audio3" src="demo3.mp3"></audio>
+      <button class="audio-btn" onclick="toggleAudio('audio3', this)">▶ Preview Demo</button>
+      
+      <!-- ===== REPLACE: Add your purchase/download link ===== -->
       <a href="#" class="button primary">Get This Pack</a>
     </div>
 
@@ -245,44 +437,90 @@ footer {
 </section>
 
 <!-- SPOTIFY -->
-<section class="spotify" id="spotify">
+<section class="spotify fade-in" id="spotify">
   <h2>Listen on Spotify</h2>
-  <p>Latest releases and playlists</p>
+  <p>Check out my latest releases and playlists</p>
 
-  <!-- YOUR EMBED -->
-  <iframe data-testid="embed-iframe" style="border-radius:12px"
-  src="https://open.spotify.com/embed/artist/6yFdyGIQXHztc5CA5m2XJo?utm_source=generator&theme=0"
-  width="100%" height="352"
-  frameBorder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  loading="lazy">
+  <!-- ===== REPLACE: Update with your Spotify artist/playlist embed ===== 
+       Go to Spotify > Share > Embed to get your own embed code -->
+  <iframe 
+    style="border-radius:12px"
+    src="https://open.spotify.com/embed/artist/6yFdyGIQXHztc5CA5m2XJo?utm_source=generator&theme=0"
+    width="100%" 
+    height="352"
+    frameBorder="0"
+    allowfullscreen=""
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy">
   </iframe>
-
 </section>
 
-<footer>
-  <p>© 2026 Robsic</p>
+<footer class="fade-in">
+  <p>© 2026 Robsic. All rights reserved.</p>
   <div class="socials">
-    <a href="#">Instagram</a>
-    <a href="#">YouTube</a>
-    <a href="#">TikTok</a>
+    <!-- ===== REPLACE: Add your social media links ===== -->
+    <a href="#" target="_blank">Instagram</a>
+    <a href="#" target="_blank">YouTube</a>
+    <a href="#" target="_blank">TikTok</a>
   </div>
 </footer>
 
 <script>
-function playAudio(id) {
-  const audio = document.getElementById(id);
+// Smooth scroll fade-in animation
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
 
-  document.querySelectorAll("audio").forEach(a => {
-    if (a !== audio) a.pause();
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => {
+  observer.observe(el);
+});
+
+// Audio player with improved UX
+function toggleAudio(audioId, button) {
+  const audio = document.getElementById(audioId);
+  const allAudios = document.querySelectorAll("audio");
+  const allButtons = document.querySelectorAll(".audio-btn");
+
+  // Pause all other audios and reset buttons
+  allAudios.forEach(a => {
+    if (a.id !== audioId) {
+      a.pause();
+      a.currentTime = 0;
+    }
+  });
+  
+  allButtons.forEach(btn => {
+    if (btn !== button) {
+      btn.classList.remove('playing');
+      btn.innerHTML = '▶ Preview Demo';
+    }
   });
 
+  // Toggle current audio
   if (audio.paused) {
     audio.play();
+    button.classList.add('playing');
+    button.innerHTML = '⏸ Pause';
   } else {
     audio.pause();
+    button.classList.remove('playing');
+    button.innerHTML = '▶ Preview Demo';
   }
+
+  // Reset button when audio ends
+  audio.onended = function() {
+    button.classList.remove('playing');
+    button.innerHTML = '▶ Preview Demo';
+  };
 }
 </script>
 

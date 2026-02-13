@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastering Services — Robsic</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at 50% -20%, #2a0040, #000 60%);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 100px 8%;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+h1, h2, h3 {
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+p {
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.primary {
+  background: linear-gradient(90deg, #a855f7, #6366f1);
+  color: white;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 35px rgba(168, 85, 247, 0.7);
+}
+
+.outline {
+  border: 1px solid #444;
+  color: #fff;
+  background: rgba(0,0,0,0.3);
+}
+
+.outline:hover {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: #a855f7;
+}
+
+/* NAVIGATION */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 8%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  color: #a855f7;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-links a {
+  margin-left: 30px;
+  color: #9ca3af;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #a855f7;
+}
+
+/* HERO */
+.hero {
+  padding-top: 180px;
+  padding-bottom: 80px;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent 70%);
+  pointer-events: none;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+}
+
+.hero small {
+  letter-spacing: 4px;
+  font-size: 13px;
+  color: #a855f7;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin: 20px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.hero p {
+  max-width: 700px;
+  margin: auto;
+  margin-bottom: 40px;
+  font-size: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+/* PRICING SECTION */
+.pricing {
+  background: rgba(10, 10, 10, 0.5);
+}
+
+.pricing h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 60px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+  border-radius: 24px;
+  padding: 40px;
+  border: 1px solid #1f1f1f;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.pricing-card:hover::before {
+  opacity: 1;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  border-color: #a855f7;
+  box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
+}
+
+.pricing-card.featured {
+  border-color: #a855f7;
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
+}
+
+.plan-name {
+  font-size: 24px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.plan-price {
+  font-size: 48px;
+  color: #a855f7;
+  margin-bottom: 10px;
+  font-weight: 800;
+  position: relative;
+  z-index: 1;
+}
+
+.plan-period {
+  color: #666;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.plan-features {
+  list-style: none;
+  margin-bottom: 30px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.plan-features li {
+  padding: 12px 0;
+  color: #9ca3af;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.plan-features li::before {
+  content: '✓';
+  color: #a855f7;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.pricing-card .button {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* PROCESS SECTION */
+.process {
+  text-align: center;
+}
+
+.process h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.process > p {
+  max-width: 700px;
+  margin: 0 auto 60px;
+  font-size: 18px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.step {
+  text-align: center;
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+.step h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 14px;
+}
+
+/* FAQ SECTION */
+.faq {
+  background: rgba(10, 10, 10, 0.5);
+}
+
+.faq h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 60px;
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #1f1f1f;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: #333;
+}
+
+.faq-question {
+  padding: 25px 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+  background: rgba(168, 85, 247, 0.05);
+}
+
+.faq-toggle {
+  font-size: 24px;
+  color: #a855f7;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-toggle {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 30px;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+  padding: 0 30px 25px;
+}
+
+.faq-answer p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* CONTACT SECTION */
+.contact {
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.contact > p {
+  max-width: 700px;
+  margin: 0 auto 60px;
+  font-size: 18px;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 14px 18px;
+  background: #0f0f0f;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #a855f7;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.success-message {
+  display: none;
+  padding: 20px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  color: #22c55e;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.success-message.show {
+  display: block;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 80px 8% 40px;
+  border-top: 1px solid #1a1a1a;
+  margin-top: 80px;
+}
+
+footer p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.socials {
+  margin-top: 30px;
+}
+
+.socials a {
+  margin: 0 15px;
+  color: #888;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s ease;
+  display: inline-block;
+}
+
+.socials a:hover {
+  color: #a855f7;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .nav {
+    padding: 15px 6%;
+  }
+  
+  .nav-links a {
+    margin-left: 15px;
+    font-size: 14px;
+  }
+  
+  .hero {
+    padding-top: 140px;
+  }
+  
+  .hero h1 {
+    font-size: 32px;
+  }
+  
+  section {
+    padding: 80px 6%;
+  }
+  
+  .pricing-grid,
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .plan-price {
+    font-size: 40px;
+  }
+}
+
+/* Smooth scroll fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-content">
+    <a href="index.html" class="logo">ROBSIC</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#products">Sample Packs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero fade-in">
+  <small>PROFESSIONAL MASTERING</small>
+  <h1>Take Your Tracks to the Next Level</h1>
+  <p>Industry-standard mastering services tailored for electronic music. I'll bring clarity, power, and polish to your productions with fast turnaround times and unlimited revisions.</p>
+  <a href="#contact" class="button primary">Get Started</a>
+</section>
+
+<!-- PRICING -->
+<section class="pricing fade-in" id="pricing">
+  <h2>Mastering Packages</h2>
+  
+  <div class="pricing-grid">
+    
+    <!-- SINGLE TRACK -->
+    <div class="pricing-card">
+      <h3 class="plan-name">Single Track</h3>
+      <div class="plan-price">$50</div>
+      <p class="plan-period">per track</p>
+      <ul class="plan-features">
+        <li>Professional mastering</li>
+        <li>Stereo enhancement</li>
+        <li>Up to 2 revisions</li>
+        <li>48-72 hour delivery</li>
+        <li>WAV & MP3 formats</li>
+      </ul>
+      <a href="#contact" class="button primary">Order Now</a>
+    </div>
+
+    <!-- EP PACKAGE (Featured) -->
+    <div class="pricing-card featured">
+      <h3 class="plan-name">EP Package</h3>
+      <div class="plan-price">$180</div>
+      <p class="plan-period">4-5 tracks</p>
+      <ul class="plan-features">
+        <li>Professional mastering</li>
+        <li>Stereo enhancement</li>
+        <li>Unlimited revisions</li>
+        <li>72 hour delivery</li>
+        <li>Multiple formats included</li>
+        <li>Mastered for streaming</li>
+      </ul>
+      <a href="#contact" class="button primary">Order Now</a>
+    </div>
+
+    <!-- ALBUM PACKAGE -->
+    <div class="pricing-card">
+      <h3 class="plan-name">Album Package</h3>
+      <div class="plan-price">$400</div>
+      <p class="plan-period">10+ tracks</p>
+      <ul class="plan-features">
+        <li>Professional mastering</li>
+        <li>Stereo enhancement</li>
+        <li>Unlimited revisions</li>
+        <li>5-7 day delivery</li>
+        <li>All formats included</li>
+        <li>Mastered for streaming & vinyl</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#contact" class="button primary">Order Now</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process fade-in">
+  <h2>How It Works</h2>
+  <p>Simple, streamlined process to get your music mastered professionally</p>
+  
+  <div class="steps-grid">
+    
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Send Your Track</h3>
+      <p>Upload your mix via the contact form or file sharing service. WAV format preferred (24-bit, 44.1kHz or higher).</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>I Master It</h3>
+      <p>I'll apply professional mastering techniques to enhance your track's clarity, dynamics, and loudness.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Review & Revise</h3>
+      <p>Listen to the mastered version and request any changes. Unlimited revisions on EP/Album packages.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Download Finals</h3>
+      <p>Receive your mastered track in multiple formats, ready for streaming platforms, radio, or physical release.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq fade-in" id="faq">
+  <h2>Frequently Asked Questions</h2>
+  
+  <div class="faq-container">
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What file format should I send?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>Please send your tracks as WAV files at 24-bit, 44.1kHz or higher. Make sure your mix has at least -3dB to -6dB of headroom (no clipping or limiting on the master channel). If you're unsure, feel free to reach out and I can guide you through the export process.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>How long does mastering take?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>Single tracks are typically delivered within 48-72 hours. EPs take around 72 hours, and full albums usually take 5-7 days. If you need a rush delivery, contact me and I'll do my best to accommodate your timeline.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What's included in the mastering?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>My mastering process includes EQ balancing, compression, stereo enhancement, limiting for optimal loudness, and preparation for streaming platforms (Spotify, Apple Music, etc.). You'll receive your track in WAV and MP3 formats, mastered to industry standards.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Do you offer stem mastering?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>Yes! Stem mastering is available for an additional fee. This involves mastering grouped stems (drums, bass, synths, vocals, etc.) separately for more control over the final sound. Contact me for custom pricing on stem mastering projects.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What if I'm not happy with the results?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>I offer up to 2 revisions on single tracks and unlimited revisions on EP and Album packages. I want you to be completely satisfied with the final product. We'll work together until your track sounds exactly how you envision it.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Can you master for vinyl?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>Absolutely! Vinyl mastering requires different technical considerations than digital mastering. I can prepare your tracks specifically for vinyl cutting, ensuring they translate well to the physical format. This is included in the Album Package or available as an add-on for other packages.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="contact fade-in" id="contact">
+  <h2>Get In Touch</h2>
+  <p>Ready to master your tracks? Fill out the form below and I'll get back to you within 24 hours.</p>
+  
+  <form class="contact-form" id="contactForm">
+    
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="service">Service *</label>
+      <select id="service" name="service" required>
+        <option value="">Select a package</option>
+        <option value="single">Single Track - $50</option>
+        <option value="ep">EP Package (4-5 tracks) - $180</option>
+        <option value="album">Album Package (10+ tracks) - $400</option>
+        <option value="custom">Custom Quote</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Project Details *</label>
+      <textarea id="message" name="message" required placeholder="Tell me about your project, deadline, and any specific requirements..."></textarea>
+    </div>
+
+    <!-- ===== REPLACE: Configure form submission =====
+         Option 1: Use a form service like Formspree, Basin, or Netlify Forms
+         Option 2: Set up your own backend email handler
+         Option 3: Use mailto (basic solution):
+         Change form tag to: <form class="contact-form" action="mailto:youremail@example.com" method="post" enctype="text/plain">
+    -->
+
+    <button type="submit" class="button primary submit-btn">Send Message</button>
+
+    <div class="success-message" id="successMessage">
+      Thanks for reaching out! I'll get back to you within 24 hours.
+    </div>
+
+  </form>
+</section>
+
+<footer class="fade-in">
+  <p>© 2026 Robsic. All rights reserved.</p>
+  <div class="socials">
+    <!-- ===== REPLACE: Add your social media links ===== -->
+    <a href="#" target="_blank">Instagram</a>
+    <a href="#" target="_blank">YouTube</a>
+    <a href="#" target="_blank">TikTok</a>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll fade-in animation
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => {
+  observer.observe(el);
+});
+
+// FAQ Toggle
+function toggleFaq(element) {
+  const faqItem = element.parentElement;
+  const allItems = document.querySelectorAll('.faq-item');
+  
+  // Close other items
+  allItems.forEach(item => {
+    if (item !== faqItem) {
+      item.classList.remove('active');
+    }
+  });
+  
+  // Toggle current item
+  faqItem.classList.toggle('active');
+}
+
+// Form submission
+// ===== REPLACE: Add your form handling logic =====
+// This is a basic example that shows a success message
+// You'll need to configure actual email sending via a service or backend
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Get form data
+  const formData = new FormData(this);
+  
+  // Here you would send the form data to your backend or form service
+  // Example with Formspree:
+  // fetch('https://formspree.io/f/YOUR_FORM_ID', {
+  //   method: 'POST',
+  //   body: formData,
+  //   headers: { 'Accept': 'application/json' }
+  // }).then(response => {
+  //   if (response.ok) {
+  //     document.getElementById('successMessage').classList.add('show');
+  //     this.reset();
+  //   }
+  // });
+  
+  // For now, just show success message (remove this when you set up real form handling)
+  document.getElementById('successMessage').classList.add('show');
+  this.reset();
+  
+  // Hide success message after 5 seconds
+  setTimeout(() => {
+    document.getElementById('successMessage').classList.remove('show');
+  }, 5000);
+});
+</script>
+
+</body>
+</html>
