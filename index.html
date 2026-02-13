@@ -69,7 +69,8 @@ p{color:#aaa}
   border:1px solid #1f1f1f;
   transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position:relative;
-  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
 .card:hover{
@@ -79,31 +80,28 @@ p{color:#aaa}
 }
 
 .card-image{
+  width:100%;
   height:200px;
   border-radius:16px;
   margin-bottom:18px;
   background-size:cover;
   background-position:center;
+  flex-shrink:0;
 }
 
 .card h3{
   margin-bottom:8px;
 }
 
-.price{color:#a855f7;margin:10px 0;font-size:20px;font-weight:600}
-
-/* PACK DETAILS - Hidden by default, shown on hover */
-.pack-details{
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
-  transition:all 0.4s ease;
+.price{
+  color:#a855f7;
   margin:10px 0;
+  font-size:20px;
+  font-weight:600;
 }
 
-.card:hover .pack-details{
-  max-height:150px;
-  opacity:1;
+/* PACK DETAILS - Always visible now, no expansion */
+.pack-details{
   margin:15px 0;
 }
 
@@ -114,43 +112,65 @@ p{color:#aaa}
 
 .pack-details li{
   color:#888;
-  font-size:14px;
-  padding:6px 0;
-  border-bottom:1px solid #1a1a1a;
+  font-size:13px;
+  padding:5px 0;
   display:flex;
   align-items:center;
-}
-
-.pack-details li:last-child{
-  border-bottom:none;
 }
 
 .pack-details li::before{
   content:'✓';
   color:#a855f7;
   font-weight:bold;
-  margin-right:10px;
-  font-size:16px;
+  margin-right:8px;
+  font-size:14px;
 }
 
 /* SNIPPETS */
+.snippets-container{
+  margin:15px 0;
+  flex-shrink:0;
+}
+
 .snippet{
   display:flex;
   align-items:center;
   gap:10px;
   margin-bottom:12px;
 }
+
 .snippet button{
-  width:28px;height:28px;border-radius:50%;
-  border:none;background:#a855f7;color:white;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  border:none;
+  background:#a855f7;
+  color:white;
   cursor:pointer;
   transition:all 0.2s ease;
+  flex-shrink:0;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
+
 .snippet button:hover{
   background:#b366f8;
   transform:scale(1.1);
 }
-.wave{flex:1;height:40px}
+
+.wave{
+  flex:1;
+  height:50px;
+  min-width:0;
+}
+
+.card .button{
+  margin-top:auto;
+  width:100%;
+  text-align:center;
+}
 
 /* SPOTIFY */
 .spotify{text-align:center}
@@ -167,6 +187,7 @@ footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60p
   .hero h1{font-size:36px}
   .hero-buttons{flex-direction:column;align-items:center}
   .button{width:80%;max-width:300px}
+  .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -192,68 +213,104 @@ footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60p
 
 <!-- PACK 1 -->
 <div class="card">
-<div class="card-image" style="background:url('images/sample pack.png')"></div>
-<h3>Robsic Sample Pack Vol.1</h3>
-<p class="price">$19.99</p>
+  <div class="card-image" style="background:url('images/sample pack.png')"></div>
+  <h3>Robsic Sample Pack Vol.1</h3>
+  <p class="price">$19.99</p>
+  
+  <!-- Pack Details - Now always visible -->
+  <div class="pack-details">
+    <ul>
+      <li>35 Synth Loops</li>
+      <li>40 Drum Samples</li>
+      <li>30 Pad Sounds</li>
+    </ul>
+  </div>
 
-<!-- ===== EDIT THESE PACK DETAILS ===== -->
-<div class="pack-details">
-  <ul>
-    <li>35 Synth Loops</li>
-    <li>40 Drum Samples</li>
-    <li>30 Pad Sounds</li>
-  </ul>
-</div>
+  <!-- Audio Snippets -->
+  <div class="snippets-container">
+    <div class="snippet">
+      <button onclick="play('p1a')">▶</button>
+      <div id="p1a" class="wave"></div>
+    </div>
+    <div class="snippet">
+      <button onclick="play('p1b')">▶</button>
+      <div id="p1b" class="wave"></div>
+    </div>
+    <div class="snippet">
+      <button onclick="play('p1c')">▶</button>
+      <div id="p1c" class="wave"></div>
+    </div>
+  </div>
 
-<div class="snippet"><button onclick="play('p1a')">▶</button><div id="p1a" class="wave"></div></div>
-<div class="snippet"><button onclick="play('p1b')">▶</button><div id="p1b" class="wave"></div></div>
-<div class="snippet"><button onclick="play('p1c')">▶</button><div id="p1c" class="wave"></div></div>
-
-<a href="#" class="button">Get Pack</a>
+  <a href="#" class="button">Get Pack</a>
 </div>
 
 <!-- PACK 2 -->
 <div class="card">
-<div class="card-image" style="background:url('images/pack2.jpg')"></div>
-<h3>Ethereal Synths</h3>
-<p class="price">$39.99</p>
+  <div class="card-image" style="background:url('images/pack2.jpg')"></div>
+  <h3>Ethereal Synths</h3>
+  <p class="price">$39.99</p>
+  
+  <!-- Pack Details -->
+  <div class="pack-details">
+    <ul>
+      <li>50 Atmospheric Synths</li>
+      <li>25 MIDI Files</li>
+      <li>20 FX Samples</li>
+    </ul>
+  </div>
 
-<!-- ===== EDIT THESE PACK DETAILS ===== -->
-<div class="pack-details">
-  <ul>
-    <li>50 Atmospheric Synths</li>
-    <li>25 MIDI Files</li>
-    <li>20 FX Samples</li>
-  </ul>
-</div>
+  <!-- Audio Snippets -->
+  <div class="snippets-container">
+    <div class="snippet">
+      <button onclick="play('p2a')">▶</button>
+      <div id="p2a" class="wave"></div>
+    </div>
+    <div class="snippet">
+      <button onclick="play('p2b')">▶</button>
+      <div id="p2b" class="wave"></div>
+    </div>
+    <div class="snippet">
+      <button onclick="play('p2c')">▶</button>
+      <div id="p2c" class="wave"></div>
+    </div>
+  </div>
 
-<div class="snippet"><button onclick="play('p2a')">▶</button><div id="p2a" class="wave"></div></div>
-<div class="snippet"><button onclick="play('p2b')">▶</button><div id="p2b" class="wave"></div></div>
-<div class="snippet"><button onclick="play('p2c')">▶</button><div id="p2c" class="wave"></div></div>
-
-<a href="#" class="button">Get Pack</a>
+  <a href="#" class="button">Get Pack</a>
 </div>
 
 <!-- PACK 3 -->
 <div class="card">
-<div class="card-image" style="background:url('images/pack3.jpg')"></div>
-<h3>Vocal Chops Essentials</h3>
-<p class="price">$24.99</p>
+  <div class="card-image" style="background:url('images/pack3.jpg')"></div>
+  <h3>Vocal Chops Essentials</h3>
+  <p class="price">$24.99</p>
+  
+  <!-- Pack Details -->
+  <div class="pack-details">
+    <ul>
+      <li>60 Vocal Chops</li>
+      <li>15 Vocal Loops</li>
+      <li>10 Processing Presets</li>
+    </ul>
+  </div>
 
-<!-- ===== EDIT THESE PACK DETAILS ===== -->
-<div class="pack-details">
-  <ul>
-    <li>60 Vocal Chops</li>
-    <li>15 Vocal Loops</li>
-    <li>10 Processing Presets</li>
-  </ul>
-</div>
+  <!-- Audio Snippets -->
+  <div class="snippets-container">
+    <div class="snippet">
+      <button onclick="play('p3a')">▶</button>
+      <div id="p3a" class="wave"></div>
+    </div>
+    <div class="snippet">
+      <button onclick="play('p3b')">▶</button>
+      <div id="p3b" class="wave"></div>
+    </div>
+    <div class="snippet">
+      <button onclick="play('p3c')">▶</button>
+      <div id="p3c" class="wave"></div>
+    </div>
+  </div>
 
-<div class="snippet"><button onclick="play('p3a')">▶</button><div id="p3a" class="wave"></div></div>
-<div class="snippet"><button onclick="play('p3b')">▶</button><div id="p3b" class="wave"></div></div>
-<div class="snippet"><button onclick="play('p3c')">▶</button><div id="p3c" class="wave"></div></div>
-
-<a href="#" class="button">Get Pack</a>
+  <a href="#" class="button">Get Pack</a>
 </div>
 
 </div>
@@ -274,16 +331,31 @@ width="100%" height="352" frameBorder="0"></iframe>
 const players={};
 
 function createWave(id,file){
-players[id]=WaveSurfer.create({
-container:"#"+id,
-waveColor:"#555",
-progressColor:"#a855f7",
-height:40
-});
-players[id].load(file);
+  try{
+    players[id]=WaveSurfer.create({
+      container:"#"+id,
+      waveColor:"#555",
+      progressColor:"#a855f7",
+      height:50,
+      barWidth:2,
+      barGap:1,
+      responsive:true,
+      normalize:true
+    });
+    
+    players[id].load(file);
+    
+    // Error handling
+    players[id].on('error', function(e) {
+      console.error('Error loading audio for ' + id + ':', e);
+    });
+    
+  } catch(e) {
+    console.error('Failed to create waveform for ' + id + ':', e);
+  }
 }
 
-/* ===== YOUR AUDIO FILES - Keep these the same ===== */
+/* ===== YOUR AUDIO FILES ===== */
 createWave("p1a","audio/Ambience 2 Porter 150bpm - A#.mp3");
 createWave("p1b","audio/Kick Clean - Fat Low.mp3");
 createWave("p1c","audio/N-Snare 21 mettalic.mp3");
@@ -297,8 +369,10 @@ createWave("p3b","audio/p3-bass.mp3");
 createWave("p3c","audio/p3-fx.mp3");
 
 function play(id){
-Object.values(players).forEach(p=>p.pause());
-players[id].playPause();
+  Object.values(players).forEach(p=>p.pause());
+  if(players[id]){
+    players[id].playPause();
+  }
 }
 </script>
 
