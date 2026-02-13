@@ -10,6 +10,11 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:Inter,sans-serif;
   background:radial-gradient(circle at 50% -20%,#2a0040,#000 60%);
@@ -23,15 +28,31 @@ p{color:#aaa}
 .hero{text-align:center;padding-top:120px}
 .hero small{letter-spacing:4px;color:#a855f7}
 .hero h1{font-size:48px;margin:20px 0}
-.hero-buttons{margin-top:30px}
+.hero-buttons{margin-top:30px;display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
 .button{
   padding:14px 28px;
   border-radius:40px;
   text-decoration:none;
   background:linear-gradient(90deg,#a855f7,#6366f1);
   color:white;
-  margin:10px;
   display:inline-block;
+  transition:all 0.3s ease;
+  box-shadow:0 0 20px rgba(168,85,247,0.3);
+}
+.button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 35px rgba(168,85,247,0.6);
+}
+
+.button.outline{
+  background:transparent;
+  border:1px solid #555;
+  box-shadow:none;
+}
+.button.outline:hover{
+  border-color:#a855f7;
+  background:rgba(168,85,247,0.1);
+  box-shadow:0 0 25px rgba(168,85,247,0.3);
 }
 
 /* PRODUCTS */
@@ -46,8 +67,11 @@ p{color:#aaa}
   border-radius:22px;
   padding:25px;
   border:1px solid #1f1f1f;
-  transition:.3s;
+  transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position:relative;
+  overflow:hidden;
 }
+
 .card:hover{
   transform:translateY(-10px);
   box-shadow:0 20px 50px rgba(168,85,247,.25);
@@ -62,7 +86,52 @@ p{color:#aaa}
   background-position:center;
 }
 
-.price{color:#a855f7;margin:10px 0}
+.card h3{
+  margin-bottom:8px;
+}
+
+.price{color:#a855f7;margin:10px 0;font-size:20px;font-weight:600}
+
+/* PACK DETAILS - Hidden by default, shown on hover */
+.pack-details{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:all 0.4s ease;
+  margin:10px 0;
+}
+
+.card:hover .pack-details{
+  max-height:150px;
+  opacity:1;
+  margin:15px 0;
+}
+
+.pack-details ul{
+  list-style:none;
+  padding:0;
+}
+
+.pack-details li{
+  color:#888;
+  font-size:14px;
+  padding:6px 0;
+  border-bottom:1px solid #1a1a1a;
+  display:flex;
+  align-items:center;
+}
+
+.pack-details li:last-child{
+  border-bottom:none;
+}
+
+.pack-details li::before{
+  content:'✓';
+  color:#a855f7;
+  font-weight:bold;
+  margin-right:10px;
+  font-size:16px;
+}
 
 /* SNIPPETS */
 .snippet{
@@ -75,6 +144,11 @@ p{color:#aaa}
   width:28px;height:28px;border-radius:50%;
   border:none;background:#a855f7;color:white;
   cursor:pointer;
+  transition:all 0.2s ease;
+}
+.snippet button:hover{
+  background:#b366f8;
+  transform:scale(1.1);
 }
 .wave{flex:1;height:40px}
 
@@ -87,6 +161,13 @@ p{color:#aaa}
 
 /* FOOTER */
 footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60px}
+
+/* Mobile Responsive */
+@media(max-width: 768px){
+  .hero h1{font-size:36px}
+  .hero-buttons{flex-direction:column;align-items:center}
+  .button{width:80%;max-width:300px}
+}
 </style>
 </head>
 
@@ -99,6 +180,7 @@ footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60p
   <p>Royalty-free sounds designed for modern electronic producers.</p>
   <div class="hero-buttons">
     <a href="#products" class="button">Browse Packs</a>
+    <a href="mastering.html" class="button outline">Mastering Services</a>
   </div>
 </section>
 
@@ -114,6 +196,15 @@ footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60p
 <h3>Robsic Sample Pack Vol.1</h3>
 <p class="price">$19.99</p>
 
+<!-- ===== EDIT THESE PACK DETAILS ===== -->
+<div class="pack-details">
+  <ul>
+    <li>35 Synth Loops</li>
+    <li>40 Drum Samples</li>
+    <li>30 Pad Sounds</li>
+  </ul>
+</div>
+
 <div class="snippet"><button onclick="play('p1a')">▶</button><div id="p1a" class="wave"></div></div>
 <div class="snippet"><button onclick="play('p1b')">▶</button><div id="p1b" class="wave"></div></div>
 <div class="snippet"><button onclick="play('p1c')">▶</button><div id="p1c" class="wave"></div></div>
@@ -127,6 +218,15 @@ footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60p
 <h3>Ethereal Synths</h3>
 <p class="price">$39.99</p>
 
+<!-- ===== EDIT THESE PACK DETAILS ===== -->
+<div class="pack-details">
+  <ul>
+    <li>50 Atmospheric Synths</li>
+    <li>25 MIDI Files</li>
+    <li>20 FX Samples</li>
+  </ul>
+</div>
+
 <div class="snippet"><button onclick="play('p2a')">▶</button><div id="p2a" class="wave"></div></div>
 <div class="snippet"><button onclick="play('p2b')">▶</button><div id="p2b" class="wave"></div></div>
 <div class="snippet"><button onclick="play('p2c')">▶</button><div id="p2c" class="wave"></div></div>
@@ -139,6 +239,15 @@ footer{text-align:center;padding:60px 0;border-top:1px solid #111;margin-top:60p
 <div class="card-image" style="background:url('images/pack3.jpg')"></div>
 <h3>Vocal Chops Essentials</h3>
 <p class="price">$24.99</p>
+
+<!-- ===== EDIT THESE PACK DETAILS ===== -->
+<div class="pack-details">
+  <ul>
+    <li>60 Vocal Chops</li>
+    <li>15 Vocal Loops</li>
+    <li>10 Processing Presets</li>
+  </ul>
+</div>
 
 <div class="snippet"><button onclick="play('p3a')">▶</button><div id="p3a" class="wave"></div></div>
 <div class="snippet"><button onclick="play('p3b')">▶</button><div id="p3b" class="wave"></div></div>
@@ -174,7 +283,7 @@ height:40
 players[id].load(file);
 }
 
-/* ===== CHANGE THESE FILE NAMES LATER ===== */
+/* ===== YOUR AUDIO FILES - Keep these the same ===== */
 createWave("p1a","audio/Ambience 2 Porter 150bpm - A#.mp3");
 createWave("p1b","audio/Kick Clean - Fat Low.mp3");
 createWave("p1c","audio/N-Snare 21 mettalic.mp3");
