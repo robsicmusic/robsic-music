@@ -47,26 +47,19 @@ p{color:#aaa;line-height:1.6}
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  background-color:#1a0a2e;
-  opacity:0.5;
+  opacity:0.3;
   z-index:0;
 }
 
-/* Fade out gradient at bottom - IMPROVED */
+/* Fade out gradient at bottom */
 .hero::after{
   content:'';
   position:absolute;
   left:0;
   right:0;
   bottom:0;
-  height:300px;
-  background:linear-gradient(to bottom, 
-    transparent 0%, 
-    rgba(0,0,0,0.3) 30%,
-    rgba(0,0,0,0.7) 60%,
-    rgba(0,0,0,0.9) 80%,
-    #000 100%
-  );
+  height:200px;
+  background:linear-gradient(to bottom, transparent, #000);
   z-index:1;
   pointer-events:none;
 }
