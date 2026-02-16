@@ -330,10 +330,16 @@ nav{
 .button.outline{
   border:2px solid #a855f7;
   color:#a855f7;
+  background:transparent;
 }
 
 .button.outline:hover{
   background:rgba(168,85,247,0.1);
+}
+
+button.button{
+  font-family:inherit;
+  cursor:pointer;
 }
 
 /* CONTENT SECTION - SIDE BY SIDE */
@@ -1104,9 +1110,9 @@ function showSlide(n) {
     if(video){
       video.pause();
     }
+    slide.classList.remove('active');
   });
   
-  slides.forEach(slide => slide.classList.remove('active'));
   dots.forEach(dot => dot.classList.remove('active'));
   
   slides[currentSlideIndex].classList.add('active');
@@ -1142,6 +1148,9 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
   });
+  
+  // Initialize carousel
+  showSlide(0);
 });
 
 // Audio players
