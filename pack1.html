@@ -229,26 +229,80 @@ nav{
   border:1px solid #222;
 }
 
-/* BANDCAMP SECTION */
-.bandcamp-section{
+/* HEADER AUDIO SNIPPETS */
+.header-audio-section{
   margin-top:25px;
   padding:20px;
-  background:rgba(0,0,0,0.5);
+  background:rgba(0,0,0,0.6);
   border-radius:16px;
   border:1px solid #1a1a1a;
 }
 
-.bandcamp-intro{
-  color:#aaa;
-  font-size:14px;
+.header-audio-intro{
+  color:#999;
+  font-size:13px;
   margin-bottom:15px;
-  text-align:center;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.header-snippet{
+  margin-bottom:10px;
+  padding:10px;
+  background:rgba(0,0,0,0.4);
+  border-radius:10px;
+  border:1px solid #1a1a1a;
+  transition:border-color 0.3s ease;
+}
+
+.header-snippet:last-child{
+  margin-bottom:0;
+}
+
+.header-snippet:hover{
+  border-color:#a855f7;
+}
+
+.header-snippet-label{
+  color:#aaa;
+  font-size:11px;
+  margin-bottom:6px;
   font-weight:500;
 }
 
-.bandcamp-section iframe{
-  border-radius:12px;
-  overflow:hidden;
+.header-snippet-player{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.header-snippet-player button{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,#a855f7,#8b4fd8);
+  color:white;
+  cursor:pointer;
+  transition:all 0.2s ease;
+  flex-shrink:0;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(168,85,247,0.3);
+}
+
+.header-snippet-player button:hover{
+  background:linear-gradient(135deg,#b366f8,#9d5fe8);
+  transform:scale(1.1);
+}
+
+.header-wave{
+  flex:1;
+  height:40px;
+  border-radius:6px;
 }
 
 .button{
@@ -604,7 +658,7 @@ footer p{
       <!-- ===== VIDEO SLIDE FIRST ===== -->
       <div class="carousel-slide active">
         <video controls preload="metadata" loop muted autoplay>
-          <source src="videos/pack1-preview.mp4" type="video/mp4">
+          <source src="images/videos/samplepack video loop.mp4" type="video/mp4">
           <source src="videos/pack1-preview.webm" type="video/webm">
           Your browser doesn't support video.
         </video>
@@ -655,13 +709,33 @@ footer p{
       <a href="#" class="button outline">Free Demo</a>
     </div>
     
-    <!-- BANDCAMP PLAYER -->
-    <div class="bandcamp-section">
-      <p class="bandcamp-intro">Here's some of the sounds I made using this pack:</p>
-      <!-- ===== REPLACE WITH YOUR BANDCAMP EMBED CODE ===== -->
-      <iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=YOUR_ALBUM_ID/size=large/bgcol=333333/linkcol=a855f7/tracklist=false/artwork=small/transparent=true/" seamless>
-        <a href="https://yourbandcamp.bandcamp.com/album/your-album">Your Album on Bandcamp</a>
-      </iframe>
+    <!-- HEADER AUDIO SNIPPETS -->
+    <div class="header-audio-section">
+      <p class="header-audio-intro">Sounds I made using this pack:</p>
+      
+      <div class="header-snippet">
+        <div class="header-snippet-label">Track Example 1</div>
+        <div class="header-snippet-player">
+          <button onclick="playHeader('h1')" aria-label="Play">▶</button>
+          <div id="h1" class="header-wave"></div>
+        </div>
+      </div>
+      
+      <div class="header-snippet">
+        <div class="header-snippet-label">Track Example 2</div>
+        <div class="header-snippet-player">
+          <button onclick="playHeader('h2')" aria-label="Play">▶</button>
+          <div id="h2" class="header-wave"></div>
+        </div>
+      </div>
+      
+      <div class="header-snippet">
+        <div class="header-snippet-label">Track Example 3</div>
+        <div class="header-snippet-player">
+          <button onclick="playHeader('h3')" aria-label="Play">▶</button>
+          <div id="h3" class="header-wave"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -896,7 +970,20 @@ createWave("s3","audio/N-Snare 21 mettalic.mp3");
 createWave("s4","audio/sample pack snippets/Cool Arp 3.mp3");
 createWave("s5","audio/sample pack snippets/Synthesized Jungle - Emaj.mp3");
 
+// Load header audio files - YOUR TRACK EXAMPLES
+createWave("h1","audio/tracks/track-example-1.mp3");  // ← Replace with your track
+createWave("h2","audio/tracks/track-example-2.mp3");  // ← Replace with your track
+createWave("h3","audio/tracks/track-example-3.mp3");  // ← Replace with your track
+
 function play(id){
+  Object.values(players).forEach(p=>p.pause());
+  
+  if(players[id]){
+    players[id].playPause();
+  }
+}
+
+function playHeader(id){
   Object.values(players).forEach(p=>p.pause());
   
   if(players[id]){
