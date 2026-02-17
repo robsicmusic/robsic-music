@@ -521,6 +521,170 @@ footer p{
   .hero h1{font-size:28px}
   .card-content{padding:20px}
 }
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:2000;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(10px);
+  animation:fadeIn 0.3s ease;
+}
+
+.modal.show{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.modal-content{
+  background:linear-gradient(145deg,#1a1a1a,#0a0a0a);
+  border-radius:24px;
+  padding:40px;
+  max-width:500px;
+  width:90%;
+  border:1px solid #333;
+  box-shadow:0 40px 100px rgba(0,0,0,0.8);
+  position:relative;
+  animation:slideUp 0.3s ease;
+}
+
+@keyframes slideUp{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.modal-close{
+  position:absolute;
+  top:20px;
+  right:25px;
+  font-size:32px;
+  color:#666;
+  cursor:pointer;
+  transition:color 0.3s ease;
+  line-height:1;
+}
+
+.modal-close:hover{
+  color:#a855f7;
+}
+
+.modal-step{
+  display:none;
+  text-align:center;
+}
+
+.modal-step.active{
+  display:block;
+}
+
+.modal-content h3{
+  font-size:28px;
+  margin-bottom:15px;
+  color:#fff;
+}
+
+.modal-content p{
+  color:#aaa;
+  margin-bottom:20px;
+  line-height:1.6;
+}
+
+.modal-fine-print{
+  font-size:12px;
+  color:#555;
+  margin-top:20px;
+}
+
+#demoForm{
+  margin-top:30px;
+}
+
+#emailInput{
+  width:100%;
+  padding:16px 20px;
+  border-radius:12px;
+  border:1px solid #333;
+  background:#0a0a0a;
+  color:#fff;
+  font-size:16px;
+  margin-bottom:15px;
+  transition:all 0.3s ease;
+  font-family:Inter,sans-serif;
+}
+
+#emailInput:focus{
+  outline:none;
+  border-color:#a855f7;
+  box-shadow:0 0 0 3px rgba(168,85,247,0.1);
+}
+
+.modal-button{
+  width:100%;
+  padding:16px 32px;
+  border-radius:40px;
+  border:none;
+  background:linear-gradient(90deg,#a855f7,#6366f1);
+  color:white;
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 0 30px rgba(168,85,247,0.4);
+  font-family:Inter,sans-serif;
+}
+
+.modal-button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 40px rgba(168,85,247,0.6);
+}
+
+.modal-button.download-btn{
+  display:inline-block;
+  text-decoration:none;
+  margin-top:10px;
+}
+
+.success-icon{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#a855f7,#6366f1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  color:white;
+  margin:0 auto 25px;
+  animation:scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn{
+  from{
+    transform:scale(0);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
 </style>
 </head>
 
@@ -759,7 +923,7 @@ footer p{
   <div class="free-demo">
     <h3>Try Before You Buy</h3>
     <p>Get a free demo pack with sample sounds from all the collection. No signup required.</p>
-    <a href="#" class="button">Download Free Demo</a>
+    <a href="javascript:void(0)" onclick="openModal()" class="button">Download Free Demo</a>
   </div>
 </section>
 
@@ -868,6 +1032,89 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
         behavior:'smooth',
         block:'start'
       });
+    }
+  });
+});
+</script>
+
+<!-- FREE DEMO MODAL -->
+<div id="demoModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+
+    <!-- Step 1: Email Input -->
+    <div id="emailStep" class="modal-step active">
+      <h3>Get Your Free Demo Pack</h3>
+      <p>Enter your email to receive instant access to the demo pack</p>
+      <form id="demoForm" onsubmit="submitEmail(event)">
+        <input
+          type="email"
+          id="emailInput"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+        >
+        <button type="submit" class="modal-button">Get Demo Pack</button>
+      </form>
+    </div>
+
+    <!-- Step 2: Download Link -->
+    <div id="downloadStep" class="modal-step">
+      <div class="success-icon">✓</div>
+      <h3>You're All Set!</h3>
+      <a href="https://www.dropbox.com/YOUR_DEMO_LINK" target="_blank" class="modal-button download-btn">
+        Download Demo Pack Now
+      </a>
+      <p class="modal-fine-print">Demo pack includes 15 samples/presets from all collections, enjoy:)</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// MODAL FUNCTIONS
+function openModal(){
+  document.getElementById('demoModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  document.getElementById('demoModal').classList.remove('show');
+  document.body.style.overflow = 'auto';
+  setTimeout(() => {
+    document.getElementById('emailStep').classList.add('active');
+    document.getElementById('downloadStep').classList.remove('active');
+    document.getElementById('emailInput').value = '';
+  }, 300);
+}
+
+function submitEmail(event){
+  event.preventDefault();
+
+  const email = document.getElementById('emailInput').value;
+
+  // Send email to Google Sheets
+  fetch('https://script.google.com/macros/s/AKfycbx2ramhzbdx4bIPC378ajJfUODGZRxh6PJ8pcAMaZZTJPoidxoDp78IpgOP9-3ewUsI7g/exec', {
+    method: 'POST',
+    body: JSON.stringify({ email: email, pack: 'Sample Pack Vol.1' })
+  }).catch(function(){});
+
+  // Show download step
+  document.getElementById('emailStep').classList.remove('active');
+  document.getElementById('downloadStep').classList.add('active');
+}
+
+// Close modal when clicking outside
+document.addEventListener('DOMContentLoaded', function(){
+  const modal = document.getElementById('demoModal');
+  modal.addEventListener('click', function(e){
+    if(e.target === modal){
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('show')){
+      closeModal();
     }
   });
 });
