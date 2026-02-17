@@ -1253,7 +1253,6 @@ function submitEmail(event){
   }).catch(function(){});
 
   // Show download step
-  document.getElementById('userEmail').textContent = email;
   document.getElementById('emailStep').classList.remove('active');
   document.getElementById('downloadStep').classList.add('active');
 }
