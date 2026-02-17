@@ -1243,20 +1243,15 @@ function closeModal(){
 
 function submitEmail(event){
   event.preventDefault();
-  
+
   const email = document.getElementById('emailInput').value;
-  
-  // TODO: Send email to your backend/service (e.g., Mailchimp, ConvertKit, etc.)
-  // For now, we'll just show the download step
-  
-  // Optional: Send to Google Sheets, Airtable, or email service
-  // Example with fetch:
-  // fetch('YOUR_BACKEND_URL', {
-  //   method: 'POST',
-  //   headers: {'Content-Type': 'application/json'},
-  //   body: JSON.stringify({email: email, pack: 'Sample Pack Vol.1'})
-  // });
-  
+
+  // Send email to Google Sheets
+  fetch('https://script.google.com/macros/s/AKfycbx2ramhzbdx4bIPC378ajJfUODGZRxh6PJ8pcAMaZZTJPoidxoDp78IpgOP9-3ewUsI7g/exec', {
+    method: 'POST',
+    body: JSON.stringify({ email: email, pack: 'Sample Pack Vol.1' })
+  }).catch(function(){});
+
   // Show download step
   document.getElementById('userEmail').textContent = email;
   document.getElementById('emailStep').classList.remove('active');
