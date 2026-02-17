@@ -1117,6 +1117,12 @@ function showSlide(n) {
   
   slides[currentSlideIndex].classList.add('active');
   dots[currentSlideIndex].classList.add('active');
+
+  // Auto-play video if the active slide has one
+  const activeVideo = slides[currentSlideIndex].querySelector('video');
+  if(activeVideo){
+    activeVideo.play().catch(function(){});
+  }
 }
 
 function nextSlide() {
