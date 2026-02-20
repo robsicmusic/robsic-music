@@ -1040,14 +1040,14 @@ function smoothScrollTo(targetEl, duration){
   var diff = targetY - startY;
   var startTime = null;
 
-  function easeOutQuart(t){
-    return 1 - Math.pow(1 - t, 4);
+  function easeOutExpo(t){
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
   }
 
   function step(timestamp){
     if(!startTime) startTime = timestamp;
     var progress = Math.min((timestamp - startTime) / duration, 1);
-    window.scrollTo(0, startY + diff * easeOutQuart(progress));
+    window.scrollTo(0, startY + diff * easeOutExpo(progress));
     if(progress < 1) requestAnimationFrame(step);
   }
 
