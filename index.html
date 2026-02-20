@@ -1034,7 +1034,7 @@ function play(id){
 
 // Premium smooth scroll with easing
 function smoothScrollTo(targetEl, duration){
-  duration = duration || 700;
+  duration = duration || 500;
   var startY = window.pageYOffset;
   var targetY = targetEl.getBoundingClientRect().top + startY - 40;
   var diff = targetY - startY;
