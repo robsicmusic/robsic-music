@@ -104,13 +104,50 @@ nav{
   justify-content:center;
 }
 
-.carousel-slide img{
+.carousel-slide img,
+.carousel-slide video{
   max-width:100%;
   max-height:100%;
   width:auto;
   height:auto;
   display:block;
   object-fit:contain;
+}
+
+.carousel-slide video{
+  pointer-events:none;
+}
+
+.carousel-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  padding:0 20px;
+  pointer-events:none;
+}
+
+.carousel-btn{
+  background:rgba(168,85,247,0.8);
+  border:none;
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.3s ease;
+  pointer-events:all;
+}
+
+.carousel-btn:hover{
+  background:#a855f7;
+  transform:scale(1.1);
 }
 
 .carousel-dots{
@@ -801,13 +838,36 @@ footer p{
   <!-- CAROUSEL -->
   <div class="carousel-container">
     <div class="carousel">
+      <!-- ===== VIDEO SLIDE FIRST ===== -->
       <div class="carousel-slide active">
+        <video preload="metadata" loop muted autoplay playsinline>
+          <source src="images/videos/samplepack video loop.mp4" type="video/mp4">
+          <source src="videos/pack2-preview.webm" type="video/webm">
+          Your browser doesn't support video.
+        </video>
+      </div>
+      <!-- ===== IMAGE SLIDES ===== -->
+      <div class="carousel-slide">
         <img src="images/PresetPack-lowkb.jpeg" alt="Serum Presets Vol.1">
       </div>
+      <div class="carousel-slide">
+        <img src="images/preview1.jpg" alt="Preview 1">
+      </div>
+      <div class="carousel-slide">
+        <img src="images/preview2.jpg" alt="Preview 2">
+      </div>
+    </div>
+
+    <div class="carousel-nav">
+      <button class="carousel-btn" onclick="prevSlide()">&#8249;</button>
+      <button class="carousel-btn" onclick="nextSlide()">&#8250;</button>
     </div>
 
     <div class="carousel-dots">
       <span class="dot active" onclick="currentSlide(0)"></span>
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
     </div>
   </div>
 
@@ -1046,7 +1106,12 @@ function showSlide(n) {
   if (n >= slides.length) currentSlideIndex = 0;
   if (n < 0) currentSlideIndex = slides.length - 1;
 
+  // Pause all videos before switching
   slides.forEach(slide => {
+    const video = slide.querySelector('video');
+    if(video){
+      video.pause();
+    }
     slide.classList.remove('active');
   });
 
@@ -1054,6 +1119,22 @@ function showSlide(n) {
 
   slides[currentSlideIndex].classList.add('active');
   dots[currentSlideIndex].classList.add('active');
+
+  // Auto-play video if the active slide has one
+  const activeVideo = slides[currentSlideIndex].querySelector('video');
+  if(activeVideo){
+    activeVideo.play().catch(function(){});
+  }
+}
+
+function nextSlide() {
+  currentSlideIndex++;
+  showSlide(currentSlideIndex);
+}
+
+function prevSlide() {
+  currentSlideIndex--;
+  showSlide(currentSlideIndex);
 }
 
 function currentSlide(n) {
@@ -1061,9 +1142,35 @@ function currentSlide(n) {
   showSlide(currentSlideIndex);
 }
 
-// Initialize carousel
+// Auto-pause videos when clicking outside
 document.addEventListener('DOMContentLoaded', function(){
+  const videos = document.querySelectorAll('.carousel-slide video');
+  videos.forEach(video => {
+    video.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(this.paused){
+        this.play();
+      }else{
+        this.pause();
+      }
+    });
+  });
+
+  // Initialize carousel
   showSlide(0);
+
+  // Force play the first video if it exists
+  setTimeout(() => {
+    const firstSlide = document.querySelector('.carousel-slide.active');
+    if(firstSlide){
+      const firstVideo = firstSlide.querySelector('video');
+      if(firstVideo){
+        firstVideo.play().catch(err => {
+          console.log('Autoplay prevented:', err);
+        });
+      }
+    }
+  }, 100);
 });
 
 // Audio players
