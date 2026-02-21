@@ -118,6 +118,10 @@ nav{
   pointer-events:none;
 }
 
+.carousel-slide[data-has-controls] video{
+  pointer-events:auto;
+}
+
 .carousel-nav{
   position:absolute;
   top:50%;
@@ -846,6 +850,13 @@ footer p{
           Your browser doesn't support video.
         </video>
       </div>
+      <!-- ===== WALKTHROUGH VIDEO (with controls + sound) ===== -->
+      <div class="carousel-slide" data-has-controls>
+        <video preload="metadata" controls playsinline>
+          <source src="images/videos/Preset Walkthou comp.mp4" type="video/mp4">
+          Your browser doesn't support video.
+        </video>
+      </div>
       <!-- ===== IMAGE SLIDES ===== -->
       <div class="carousel-slide">
         <img src="images/PresetPack-lowkb.jpeg" alt="Serum Presets Vol.1">
@@ -868,6 +879,7 @@ footer p{
       <span class="dot" onclick="currentSlide(1)"></span>
       <span class="dot" onclick="currentSlide(2)"></span>
       <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
     </div>
   </div>
 
@@ -1111,6 +1123,7 @@ function showSlide(n) {
     const video = slide.querySelector('video');
     if(video){
       video.pause();
+      video.currentTime = 0;
     }
     slide.classList.remove('active');
   });
@@ -1121,9 +1134,21 @@ function showSlide(n) {
   dots[currentSlideIndex].classList.add('active');
 
   // Auto-play video if the active slide has one
-  const activeVideo = slides[currentSlideIndex].querySelector('video');
+  const activeSlide = slides[currentSlideIndex];
+  const activeVideo = activeSlide.querySelector('video');
   if(activeVideo){
-    activeVideo.play().catch(function(){});
+    // Walkthrough video: play with sound
+    if(activeSlide.hasAttribute('data-has-controls')){
+      activeVideo.muted = false;
+      activeVideo.play().catch(function(){
+        // Browser blocked unmuted autoplay — retry muted so it still plays
+        activeVideo.muted = true;
+        activeVideo.play().catch(function(){});
+      });
+    } else {
+      activeVideo.muted = true;
+      activeVideo.play().catch(function(){});
+    }
   }
 }
 
