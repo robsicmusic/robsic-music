@@ -207,9 +207,10 @@ nav{
 .launch-badge{
   font-size:11px;
   font-weight:700;
-  color:#ccc;
-  background:linear-gradient(135deg,rgba(200,200,200,0.15),rgba(255,255,255,0.08),rgba(200,200,200,0.15));
-  border:1px solid rgba(255,255,255,0.2);
+  color:transparent;
+  background:linear-gradient(105deg,#888,#ccc 30%,#fff 50%,#ccc 70%,#888);
+  background-clip:text;
+  -webkit-background-clip:text;
   padding:3px 9px;
   border-radius:6px;
   letter-spacing:0.5px;
@@ -218,7 +219,17 @@ nav{
   transform:rotate(8deg);
   margin-top:2px;
   margin-left:-4px;
-  text-shadow:0 0 6px rgba(255,255,255,0.15);
+  position:relative;
+}
+
+.launch-badge::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:6px;
+  background:linear-gradient(135deg,rgba(160,160,160,0.2),rgba(255,255,255,0.1) 40%,rgba(200,200,200,0.25) 50%,rgba(255,255,255,0.05) 60%,rgba(160,160,160,0.2));
+  border:1px solid rgba(255,255,255,0.25);
+  z-index:-1;
 }
 
 .product-tags{
