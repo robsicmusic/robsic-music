@@ -579,6 +579,23 @@ footer p{
     padding:10px 18px;
     font-size:15px;
   }
+
+  /* Mobile audio player improvements */
+  .snippet-player button{
+    width:44px;
+    height:44px;
+    font-size:14px;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  .snippet-player button:hover{
+    transform:none;
+    box-shadow:0 4px 12px rgba(168,85,247,0.3);
+  }
+  .snippet-player button:active{
+    transform:scale(0.92);
+    background:linear-gradient(135deg,#9040e0,#7a3bc0);
+  }
 }
 
 @media(max-width:480px){
@@ -1033,11 +1050,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <script>
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
 const players={};
 
 function createWave(id,file){
   try{
-    players[id]=WaveSurfer.create({
+    var opts = {
       container:"#"+id,
       waveColor:"#444",
       progressColor:"#a855f7",
@@ -1048,24 +1066,35 @@ function createWave(id,file){
       responsive:true,
       normalize:true,
       barRadius:2
-    });
-    
+    };
+    if(isMobile){
+      opts.backend = 'MediaElement';
+      opts.cursorWidth = 0;
+    }
+    players[id]=WaveSurfer.create(opts);
+
     players[id].load(file);
-    
+
     // Error handling
     players[id].on('error',function(e){
       console.error('Error loading audio for '+id+':',e);
     });
-    
+
     // Loading state
     players[id].on('loading',function(){
       document.getElementById(id).classList.add('loading');
     });
-    
+
     players[id].on('ready',function(){
       document.getElementById(id).classList.remove('loading');
     });
-    
+
+    // Reset button when track ends
+    players[id].on('finish',function(){
+      var btn = document.querySelector('#'+id).parentElement.querySelector('button');
+      if(btn) btn.textContent = '▶';
+    });
+
   }catch(e){
     console.error('Failed to create waveform for '+id+':',e);
   }
@@ -1094,12 +1123,18 @@ createWave("p3d","audio/Vocal Chop Essentials/Again & Again -G#m - 150.mp3");  /
 createWave("p3e","audio/Vocal Chop Essentials/Vox Chop 4 - D - 150.mp3"); // Add your 5th audio file
 
 function play(id){
-  // Pause all other players
-  Object.values(players).forEach(p=>p.pause());
-  
-  // Play/pause the selected one
-  if(players[id]){
-    players[id].playPause();
+  var wasPlaying = players[id] && players[id].isPlaying();
+  // Pause all and reset buttons
+  Object.keys(players).forEach(function(key){
+    players[key].pause();
+    var btn = document.querySelector('#'+key).parentElement.querySelector('button');
+    if(btn) btn.textContent = '▶';
+  });
+  // Only play if it wasn't already playing (allows stopping)
+  if(players[id] && !wasPlaying){
+    players[id].play();
+    var btn = document.querySelector('#'+id).parentElement.querySelector('button');
+    if(btn) btn.textContent = '⏸';
   }
 }
 
